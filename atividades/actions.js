@@ -22,10 +22,10 @@ const loadAtividadesFeitas = () => {
   }
 };
 
-const saveNotes = (notes) => {
+const saveNotes = (notes, file) => {
   const dataJSON = JSON.stringify(notes);
 
-  fs.writeFileSync("atividades.json", dataJSON);
+  fs.writeFileSync(file, dataJSON);
 };
 
 const addAtividade = (nome, disciplina) => {
@@ -36,23 +36,24 @@ const addAtividade = (nome, disciplina) => {
     disciplina,
   });
 
-  saveNotes(atividades);
+  saveNotes(atividades, "atividades.json");
 };
 
-const computarAtividadeFeita = (id_atividade, aluno, disciplina) => {
+const computarAtividadeFeita = (id_atividade, aluno, disciplina, nota) => {
+  console.log("computando");
   const atividadesFeitas = loadAtividadesFeitas();
   atividadesFeitas.push({
     id_atividade,
     aluno,
     disciplina,
+    nota,
   });
 
-  saveNotes(atividades);
+  saveNotes(atividadesFeitas, "atividadesFeitas.json");
 };
 
 module.exports = {
   loadAtividades,
-  saveNotes,
   addAtividade,
   computarAtividadeFeita,
 };

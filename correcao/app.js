@@ -9,18 +9,15 @@ app.get("/correcao/:id_atividade", function (req, res) {
   res.send("Hello World!");
 });
 
-app.post("/correcao/:id_atividade/:aluno", async function (req, res, next) {
-  const { id_atividade, aluno } = req.params;
-  const { nota } = req.body;
+app.post("/correcao", async function (req, res, next) {
+  const { id_atividade, aluno, disciplina, nota } = req.body;
 
   await publishToQueue(
     "atividades",
-    JSON.stringify({ id_atividade, aluno, nota })
+    JSON.stringify({ id_atividade, aluno, disciplina, nota })
   );
-  res.statusCode = 200;
-  console.log("oioi");
 
-  res.status(200).send("Message sent!");
+  res.status(200).send("Nota atribuída!");
 });
 
 app.listen(5000, function () {
