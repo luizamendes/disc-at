@@ -34,7 +34,3 @@ amqp.connect(CONN_URL, function (err, conn) {
     );
   });
 });
-
-module.exports = {
-  consumeFromQueue,
-};
