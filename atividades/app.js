@@ -1,10 +1,11 @@
+require("./worker-1");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const {
   addAtividade,
   computarAtividadeFeita,
-  loadAtividades,
+  loadAtividadesFeitas,
 } = require("./actions");
 
 app.use(bodyParser.json());
@@ -21,12 +22,11 @@ app.post("/atividades", function (req, res) {
   res.status(201).send("Solicitação enviada");
 });
 
-app.get("/check-atividade/", async function (req, res) {
+app.get("/check-atividade", async function (req, res) {
   const { id_atividade, aluno, disciplina } = req.body;
   let resposta = "";
-
   try {
-    const atividadesFeitas = loadAtividades();
+    const atividadesFeitas = loadAtividadesFeitas();
     atividadesFeitas.map((atividade) => {
       if (
         atividade.id_atividade === id_atividade &&

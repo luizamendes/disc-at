@@ -1,11 +1,9 @@
+require("dotenv").config();
 const amqp = require("amqplib/callback_api");
-
-const CONN_URL =
-  "amqps://tjphrevb:wKbnb5aO7plBgVbYmfE79LfKMLL50vHA@hornet.rmq.cloudamqp.com/tjphrevb";
 
 let ch = null;
 
-amqp.connect(CONN_URL, function (err, conn) {
+amqp.connect(process.env.CONN_URL, function (err, conn) {
   conn.createChannel(function (err, channel) {
     ch = channel;
   });
