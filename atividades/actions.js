@@ -47,7 +47,7 @@ const addAtividade = (nome, disciplina) => {
     disciplina,
   });
 
-  saveNotes(atividades, "atividades.json");
+  saveAtividades(atividades, "atividades.json");
 };
 
 const computarAtividadeFeita = (id_atividade, aluno, disciplina) => {
@@ -58,7 +58,7 @@ const computarAtividadeFeita = (id_atividade, aluno, disciplina) => {
     disciplina,
   });
 
-  saveNotes(atividadesFeitas, "atividadesFeitas.json");
+  saveAtividades(atividadesFeitas, "atividadesFeitas.json");
 };
 
 const computarAtividadeCorrigida = (id_atividade, aluno, disciplina, nota) => {
