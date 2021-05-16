@@ -2,7 +2,7 @@ const { upperCaseString } = require("./index");
 
 describe("Testing upperCaseString(str)", () => {
   it("should return first letter uppercase - case one uppercase word", () => {
-    expect(upperCaseString("HELLO")).toEqual("Hello");
+    expect(upperCaseString("HELLO")).toEqual("HellO");
   });
 
   it("should return first letter uppercase - case one lowercase word", () => {
