@@ -15,14 +15,14 @@ defaults:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x, 15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    env:
+      REPO_CORRECAO: ${{ secrets.DOCKER_REPO_CORRECAO }}
+      REPO_ATIVIDADES: ${{ secrets.DOCKER_REPO_ATIVIDADES }}
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -32,3 +32,15 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USER }} 
+            -p ${{ secrets.DOCKER_PASS }}
+    - name: Build Docker correcao image
+      run:docker build -t $REPO_CORRECAO:latest -t $REPO_CORRECAO:${GITHUB_SHA::8} .
+    - name: Build Docker atividades image
+      run:docker build -t $REPO_ATIVIDADES:latest -t $REPO_ATIVIDADES:${GITHUB_SHA::8} .
+    - name: Publish Docker correcao image
+      run: docker push $REPO_CORRECAO
+    - name: Publish Docker atividades image
+      run: docker push $REPO_ATIVIDADES
+
