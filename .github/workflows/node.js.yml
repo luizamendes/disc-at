@@ -33,8 +33,8 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-    - run: docker build -t luizamendes/correcao ./correcao
-    - run: docker build -t luizamendes/atividades ./atividades
-    - run: docker push $REPO_CORRECAO
-    - run: docker push $REPO_ATIVIDADES
+    - run: docker build -t luizamendes/correcao ../correcao
+    - run: docker build -t luizamendes/atividades .
+    - run: docker push luizamendes/correcao
+    - run: docker push luizamendes/atividades
 
