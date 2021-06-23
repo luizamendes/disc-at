@@ -32,6 +32,5 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - name: Login to Docker Hub
 
 
