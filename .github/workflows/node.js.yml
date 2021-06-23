@@ -36,9 +36,9 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USER }} 
             -p ${{ secrets.DOCKER_PASS }}
     - name: Build Docker correcao image
-      run: docker build -t $REPO_CORRECAO:latest -t $REPO_CORRECAO:${GITHUB_SHA::8} .
+      run: docker build -t $REPO_CORRECAO:latest -t $REPO_CORRECAO:${GITHUB_SHA::8} ./correcao
     - name: Build Docker atividades image
-      run: docker build -t $REPO_ATIVIDADES:latest -t $REPO_ATIVIDADES:${GITHUB_SHA::8} .
+      run: docker build -t $REPO_ATIVIDADES:latest -t $REPO_ATIVIDADES:${GITHUB_SHA::8} ./atividades
     - name: Publish Docker correcao image
       run: docker push $REPO_CORRECAO
     - name: Publish Docker atividades image
