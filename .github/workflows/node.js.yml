@@ -37,4 +37,15 @@ jobs:
     - run: docker build -t luizamendes/atividades .
     - run: docker push luizamendes/correcao
     - run: docker push luizamendes/atividades
+    - name: Deploy to Docker Host
+      uses: wshihadeh/docker-deployment-action@v1
+      with:
+        remote_docker_host: ${{ secrets.UBUNTU_SERVER }}
+        ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+        ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+        deployment_mode: docker-compose
+        args: up -d
+        pre_deployment_command_args: 'bundle exec rake db:migrate'
+        docker_prune: 'true'
+        pull_images_first: 'true'
 
