@@ -9,10 +9,6 @@ on:
   pull_request:
     branches: [main]
 
-defaults:
-  run:
-    working-directory: atividades
-
 jobs:
   deploy:
     runs-on: self-hosted
@@ -20,24 +16,39 @@ jobs:
       matrix:
         node-version: [12.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    env:
-      REPO_ATIVIDADES: ${{ secrets.DOCKER_REPO_ATIVIDADES }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm test
-      - name: Make envfile
+      - name: Install dependencies and run tests
+        working-directory: ./correcao
+        run: | 
+        npm install
+        npm test
+      - name: Make envfile atividades
         uses: SpicyPizza/create-envfile@master
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
           directory: atividades
-      - run: npm run build --if-present
-      - run: pm2 restart AtividadesServer
+      - name: Make envfile correcao
+        uses: SpicyPizza/create-envfile@master
+        with:
+          envkey_DEBUG: false
+          envkey_CONN_URL: ${{ secrets.CONN_URL }}
+          directory: correcao
+      - name: Build atividades
+        working-directory: ./atividades
+        run: npm run build --if-present
+      - name: Build correcao
+        working-directory: ./correcao
+        run: npm run build --if-present
+      - name: Restart Correcao
+        run: pm2 restart CorrecaoServer
+      - name: Restart Atividades
+        run: pm2 restart AtividadesServer
 
       # - run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       # - run: docker build -t luizamendes/correcao ../correcao
