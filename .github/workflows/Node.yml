@@ -60,11 +60,12 @@ jobs:
       - name: Restart Atividades
         run: pm2 restart AtividadesServer
       - name: send images to docker hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-        run: docker build -t luizamendes/correcao ./correcao
-        run: docker build -t luizamendes/atividades ./atividades
-        run: docker push luizamendes/correcao
-        run: docker push luizamendes/atividades
+        run: |
+          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+          docker build -t luizamendes/correcao ./correcao
+          docker build -t luizamendes/atividades ./atividades
+          docker push luizamendes/correcao
+          docker push luizamendes/atividades
     # - name: Deploy to Docker Host
     #   uses: wshihadeh/docker-deployment-action@v1
     #   with:
