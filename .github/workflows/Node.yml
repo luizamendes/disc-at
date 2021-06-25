@@ -44,6 +44,11 @@ jobs:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
           directory: correcao
+      - name: Make envfile root
+        uses: SpicyPizza/create-envfile@master
+        with:
+          envkey_DEBUG: false
+          envkey_CONN_URL: ${{ secrets.CONN_URL }}
       - name: Build atividades
         working-directory: ./atividades
         run: npm run build --if-present
