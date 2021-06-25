@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: atividades
+    working-directory: correcao
 
 jobs:
   deploy:
@@ -22,7 +22,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       REPO_CORRECAO: ${{ secrets.DOCKER_REPO_CORRECAO }}
-      REPO_ATIVIDADES: ${{ secrets.DOCKER_REPO_ATIVIDADES }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -30,20 +29,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      - run: npm test
       - run: npm run build --if-present
       - name: Make envfile
         uses: SpicyPizza/create-envfile@master
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
-          directory: atividades
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@master
-        with:
-          envkey_DEBUG: false
-          envkey_CONN_URL: ${{ secrets.CONN_URL }}
           directory: correcao
-      - run: npm test
+      - run: pm2 restart CorrecaoServer
+
       # - run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       # - run: docker build -t luizamendes/correcao ../correcao
       # - run: docker build -t luizamendes/atividades .
