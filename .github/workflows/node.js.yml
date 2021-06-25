@@ -1,60 +1,8 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
-
-# defaults:
-#   run:
-#     working-directory: atividades
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [10.x, 12.x, 14.x, 15.x]
-#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-#     env:
-#       REPO_CORRECAO: ${{ secrets.DOCKER_REPO_CORRECAO }}
-#       REPO_ATIVIDADES: ${{ secrets.DOCKER_REPO_ATIVIDADES }}
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: ${{ matrix.node-version }}
-#       - run: npm ci
-#       - run: npm install
-#       - run: npm run build --if-present
-#       - run: npm test
-#       - run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-#       - run: docker build -t luizamendes/correcao ../correcao
-#       - run: docker build -t luizamendes/atividades .
-#       - run: docker push luizamendes/correcao
-#       - run: docker push luizamendes/atividades
-    # - name: Deploy to Docker Host
-    #   uses: wshihadeh/docker-deployment-action@v1
-    #   with:
-    #     remote_docker_host: ${{ secrets.UBUNTU_SERVER }}
-    #     ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
-    #     ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-    #     deployment_mode: docker-compose
-    #     args: up -d
-    #     pre_deployment_command_args: 'bundle exec rake db:migrate'
-    #     docker_prune: 'true'
-    #     pull_images_first: 'true'
-
 name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 defaults:
   run:
@@ -63,11 +11,11 @@ defaults:
 jobs:
   deploy:
     runs-on: self-hosted
-    
-  strategy: 
+
+  strategy:
     matrix:
       node-version: [12.x]
-            
+
   steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
