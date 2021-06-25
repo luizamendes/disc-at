@@ -32,13 +32,13 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@master
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
           directory: atividades
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@master
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
