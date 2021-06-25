@@ -36,13 +36,13 @@ jobs:
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
-          directory: ./atividades
+          directory: atividades
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_DEBUG: false
           envkey_CONN_URL: ${{ secrets.CONN_URL }}
-          directory: ./correcao
+          directory: correcao
       - run: npm test
       # - run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       # - run: docker build -t luizamendes/correcao ../correcao
